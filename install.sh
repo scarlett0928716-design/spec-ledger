@@ -3,7 +3,7 @@
 #
 # 用法：
 #   bash install.sh <目标项目目录> [--force]
-#   curl -fsSL https://raw.githubusercontent.com/<your-account>/spec-ledger/main/install.sh | bash -s -- <目标目录>
+#   curl -fsSL https://raw.githubusercontent.com/scarlett0928716-design/spec-ledger/main/install.sh | bash -s -- <目标目录>
 #
 # 默认不覆盖已存在的文件（安全接入已有项目）；--force 覆盖全部。
 set -euo pipefail
@@ -23,7 +23,7 @@ if [ -n "$HERE" ] && [ -d "$HERE/template" ]; then
   SRC="$HERE/template"
 else
   TMP="$(mktemp -d)"
-  REPO="${SPEC_LEDGER_REPO:-https://github.com/<your-account>/spec-ledger.git}"
+  REPO="${SPEC_LEDGER_REPO:-https://github.com/scarlett0928716-design/spec-ledger.git}"
   git clone --depth 1 --quiet "$REPO" "$TMP/spec-ledger"
   SRC="$TMP/spec-ledger/template"
 fi

@@ -3,7 +3,7 @@
 > 本文件是所有 AI coding agent（Claude Code / Codex / Cursor / 其他）进入本项目时**必须先读**的规则。
 > 它不是建议，是约束。违反这些规则的产出一律拒绝。
 >
-> 本文件由 [spec-ledger](https://github.com/<your-account>/spec-ledger) 安装，按项目需要修改"项目参数"一节即可，其余章节建议保持原样。
+> 本文件由 [spec-ledger](https://github.com/scarlett0928716-design/spec-ledger) 安装，按项目需要修改"项目参数"一节即可，其余章节建议保持原样。
 
 ---
 
