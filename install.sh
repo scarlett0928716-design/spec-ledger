@@ -31,7 +31,7 @@ fi
 mkdir -p "$TARGET"
 TARGET="$(cd "$TARGET" && pwd)"
 
-copied=0; skipped=0
+copied=0; skipped=0; copied_list=()
 while IFS= read -r -d '' f; do
   rel="${f#"$SRC"/}"
   dest="$TARGET/$rel"
@@ -40,15 +40,18 @@ while IFS= read -r -d '' f; do
   fi
   mkdir -p "$(dirname "$dest")"
   cp "$f" "$dest"
-  copied=$((copied+1))
+  copied=$((copied+1)); copied_list+=("$dest")
 done < <(find "$SRC" -type f -print0)
 
 chmod +x "$TARGET/scripts/gate.sh" "$TARGET/scripts/setup.sh" "$TARGET/scripts/git-hooks/"* 2>/dev/null || true
 
-# 把日期填进模板
+# 把日期填进模板——只处理本次新复制的文件，绝不碰项目里已有的
 TODAY="$(date +%Y-%m-%d)"
-for f in "$TARGET/AGENTS.md" "$TARGET/spec/governance/coding-discipline.md"; do
-  [ -f "$f" ] && sed -i.bak "s/YYYY-MM-DD/$TODAY/g" "$f" && rm -f "$f.bak"
+for f in "${copied_list[@]}"; do
+  case "$f" in
+    */AGENTS.md|*/spec/governance/coding-discipline.md)
+      sed -i.bak "s/YYYY-MM-DD/$TODAY/g" "$f" && rm -f "$f.bak" ;;
+  esac
 done
 
 cat <<EOF

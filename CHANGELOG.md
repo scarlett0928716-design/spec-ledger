@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.1 — 2026-10-08
+
+- 修复 `install.sh`：日期占位替换只作用于本次新复制的文件，不再改动目标项目里已有的 `AGENTS.md` / governance
+
 ## v0.2.0 — 2026-10-08
 
 借鉴 [mattpocock/skills](https://github.com/mattpocock/skills) 四个机制，补上"对话与词汇"这一层：
