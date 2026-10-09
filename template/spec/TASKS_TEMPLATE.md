@@ -2,7 +2,7 @@
 
 > 对应 spec：`spec/planned/<id>-<name>.md`
 > 生成日期：YYYY-MM-DD
-> 生成方式：`/tasks` 或 `prompts/04-tasks.md`
+> 生成方式：`/tasks` 或 `prompts/05-tasks.md`
 >
 > 规则：这是 spec/ 目录下 **唯一允许 AI 修改的文件**，且只能改"状态"和"commit"两列。
 > 换会话、换 agent 接手时从这里继续，不重新拆。

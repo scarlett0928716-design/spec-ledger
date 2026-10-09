@@ -42,9 +42,10 @@
 动任何代码之前，先读：
 1. 本文件（AGENTS.md）
 2. `spec/governance/` 下的所有长期规则
-3. 当前任务对应的 spec 文件（`spec/planned/` 或 `spec/implemented/`）
-4. 当前任务的任务账本（`spec/planned/<spec>.tasks.md`，如果有）
-5. 相关的特征测试（`tests/characterization/`）
+3. `CONTEXT.md` 项目词汇表——术语、主键、主路径以它为准
+4. 当前任务对应的 spec 文件（`spec/planned/` 或 `spec/implemented/`）
+5. 当前任务的任务账本（`spec/planned/<spec>.tasks.md`，如果有）
+6. 相关的特征测试（`tests/characterization/`）
 
 ### 2.2 Spec 优先
 
@@ -57,6 +58,7 @@
 - **没有特征测试，不重构。** 对遗留代码，先锁行为再动结构。
 - 新功能必须同步写测试。PR 里代码和测试必须同时出现。
 - 测试红了不许继续扩大修改。先停下，判断是测试问题还是行为变了。
+- **测试写在接缝（seam）上**：先列出要在哪些公共边界（路由 / 公共函数 / CLI / 导出文件）上验证行为，人确认后再写；不 mock 内部、不测私有方法、期望值不能用被测代码算出来。
 
 ### 2.4 小步提交
 
@@ -78,6 +80,8 @@
 - 删除看起来没用的代码（可能有隐式依赖）
 - 修改 spec 状态或移动 spec 文件
 - 修改 `spec/governance/` 和本文件
+- 修改 `CONTEXT.md` 的正式术语表（你只能往"待确认"区追加）
+- 自行拍板业务语义——不确定就用 `/grill` 问，或记入 CONTEXT.md 待确认区
 - 合并 PR
 
 ---
@@ -160,8 +164,8 @@ bash scripts/gate.sh
 
 ## 七、遗留代码处理规则
 
-1. 不懂的代码先梳理结构（`prompts/00-survey.md`），不要直接改
-2. 可疑行为先锁进特征测试（`prompts/02-lock.md`），不要顺手修
+1. 不懂的代码先梳理结构（`prompts/01-survey.md`），不要直接改
+2. 可疑行为先锁进特征测试（`prompts/04-lock.md`），不要顺手修
 3. 多套实现并存时，先确认哪套是主路径
 4. import 路径是行为面——不能随意移动
 
@@ -173,12 +177,13 @@ bash scripts/gate.sh
 |---|---|---|
 | issue 分流 | `prompts/00-triage.md` | `/triage` |
 | 架构梳理（只读） | `prompts/01-survey.md` | `/survey` |
-| 生成 spec（含自检） | `prompts/02-spec.md` | `/spec` |
-| 特征测试（锁现状） | `prompts/03-lock.md` | `/lock` |
-| 任务拆解（落盘） | `prompts/04-tasks.md` | `/tasks` |
-| 新功能开发（TDD） | `prompts/05-feature.md` | `/feature` |
-| 安全重构（小步） | `prompts/06-refactor.md` | `/refactor` |
-| 提交与 PR | `prompts/07-pr.md` | `/pr` |
+| 追问（写 spec 前把人问清楚） | `prompts/02-grill.md` | `/grill` |
+| 生成 spec（含自检） | `prompts/03-spec.md` | `/spec` |
+| 特征测试（锁现状） | `prompts/04-lock.md` | `/lock` |
+| 任务拆解（落盘） | `prompts/05-tasks.md` | `/tasks` |
+| 新功能开发（TDD） | `prompts/06-feature.md` | `/feature` |
+| 安全重构（小步） | `prompts/07-refactor.md` | `/refactor` |
+| 提交与 PR | `prompts/08-pr.md` | `/pr` |
 
 ---
 

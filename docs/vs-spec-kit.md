@@ -6,7 +6,7 @@
 
 | 维度 | spec-kit | spec-ledger |
 |---|---|---|
-| 宪法层 | `/speckit-constitution` → `constitution.md` | `AGENTS.md` + `spec/governance/`（R1–R7） |
+| 宪法层 | `/speckit-constitution` → `constitution.md` | `AGENTS.md` + `spec/governance/`（R1–R8）+ `CONTEXT.md` |
 | 需求 → 设计 → 任务 | `specify → plan → tasks`，每 feature 独立编号目录 + 自动建分支 | `/spec`（生成 + 自检）→ 人审 → `/tasks`；spec 与账本同名同目录 |
 | 执行与收敛 | `implement → converge` 循环到 "Converged" | `/feature` 或 `/refactor` 按账本逐任务；账本全 ✅ + 门禁全绿 = 收敛 |
 | spec 自检 | 可选 clarify / checklist / 一致性分析 | 强制：spec 第 9 节自检记录（含糊点 / 矛盾 / 不可测 / 领域假设） |

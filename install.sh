@@ -57,10 +57,10 @@ spec-ledger 已安装到: $TARGET
   复制 $copied 个文件，跳过 $skipped 个已存在文件$( [ "$skipped" -gt 0 ] && echo "（需要覆盖请加 --force）" )
 
 下一步（按顺序）：
-  1. 编辑 AGENTS.md 第零节"项目参数"（代码目录、裁决人）
+  1. 编辑 AGENTS.md 第零节"项目参数"（代码目录、裁决人），往 CONTEXT.md 填前 5 个最容易混淆的术语
   2. cd "$TARGET" && bash scripts/setup.sh      # 启用 pre-commit 门禁并试跑
   3. 已有项目：挑一个最不敢动的老入口，先 /survey → /lock
-     新项目：  第一个功能先 /spec → 人审 → /tasks → /feature
+     新项目：  第一个功能先 /grill → /spec → 人审 → /tasks → /feature
   4. 把 docs/methodology.md 里的"人的角色清单"贴在你看得见的地方
 
 EOF

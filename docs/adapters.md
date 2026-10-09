@@ -9,16 +9,19 @@
 | 命令 | 作用 |
 |---|---|
 | `/triage <issue>` | 分流 |
-| `/survey <路径>` | 只读梳理 → `docs/survey/` |
-| `/spec <需求>` | 生成 spec + 自检 |
-| `/lock <梳理结果或 spec>` | 特征测试 |
+| `/survey <路径>` | 只读梳理 → `docs/survey/`（agent 也可自行调用） |
+| `/grill <需求>` | AI 追问、人裁决，输出裁决记录 |
+| `/spec <需求或裁决记录>` | 生成 spec + 自检 |
+| `/lock <梳理结果或 spec>` | 列接缝 → 特征测试（agent 也可自行调用） |
 | `/tasks <spec 路径>` | 任务账本 |
-| `/feature <spec 路径>` | TDD 实现 |
+| `/feature <spec 路径>` | 列接缝 → TDD 实现 |
 | `/refactor <目标 + 任务号>` | 小步重构 |
 | `/pr <issue 号>` | 提交与 PR |
 
 - 命令文件在 `.claude/commands/`，内容只有几行，通过 `@AGENTS.md` 和 `@prompts/xx.md` 把方法论文件引入上下文。改 `prompts/`，命令自动生效。
 - `.claude/skills/spec-ledger/SKILL.md` 让 Claude Code 在收到"改代码"类请求时自动判断该走哪一步，并在该停的地方停下来问人。
+- `.claude/skills/tdd-seams/SKILL.md` 是 model-invoked 纪律：agent 写测试时自动适用，不需要你敲。
+- 编排类命令（triage / grill / spec / tasks / feature / refactor / pr）带 `disable-model-invocation: true`，只由人发起；`survey` 和 `lock` 允许 agent 自行调用。
 - 建议搭配 Claude Code 的 plan mode 做 `/spec` 之前的探索；`/tasks` 产出的账本比会话内 TaskList 可靠——它落盘。
 - 可选硬化：在 `.claude/settings.json` 加一个 `PreToolUse` hook 拦截 `git commit` 时跑 `scripts/gate.sh`。通常不需要，因为 pre-commit hook 已经覆盖了所有 agent。
 
@@ -29,7 +32,9 @@
 
 ```
 Always read and follow AGENTS.md before writing any code.
+Always read CONTEXT.md for domain terms; never decide domain semantics yourself — add to its 待确认 section and ask.
 Always read the relevant spec in spec/ and its *.tasks.md before implementing.
+List test seams and get them confirmed before writing any test.
 Never modify files in spec/governance/ or AGENTS.md; never move spec files between status folders.
 Run `bash scripts/gate.sh` before every commit.
 ```

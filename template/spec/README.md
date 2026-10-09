@@ -29,7 +29,7 @@ spec/
     │
     ├─ 局部 bug，期望已清楚 → 最小修复 + 回归测试 + 同步文档（不需要新 spec）
     │
-    ├─ 涉及新功能 → 写 planned spec → spec 自检 → 人审 → 拆任务账本 → 实现 → 人移到 implemented
+    ├─ 涉及新功能 → /grill 追问 → 写 planned spec → spec 自检 → 人审 → 拆任务账本 → 实现 → 人移到 implemented
     │
     ├─ 涉及 public API → 先对齐兼容策略 → 写 spec → 实现
     │
