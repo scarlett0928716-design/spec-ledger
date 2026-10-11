@@ -5,8 +5,15 @@
 一套可以复制进任何项目的目录骨架 + 9 个阶段 prompt + 词汇表 + 硬门禁。agent 中立（Claude Code / Codex / Cursor 都能用），零运行时依赖，纯 markdown + 两个 shell 脚本。
 
 ```
-bash install.sh ~/Code/your-project
+bash install.sh ~/Code/your-project          # 项目骨架：AGENTS.md / CONTEXT.md / spec/ / scripts/ / prompts/
 cd ~/Code/your-project && bash scripts/setup.sh
+```
+
+Claude Code 用户再装一次插件（所有仓库通用）：
+
+```
+/plugin marketplace add scarlett0928716-design/spec-ledger
+/plugin install spec-ledger@spec-ledger
 ```
 
 ---
@@ -68,11 +75,7 @@ your-project/
 │   ├── TASKS_TEMPLATE.md          ← 任务账本模板
 │   ├── governance/coding-discipline.md   ← R1–R8 长期规则，AI 不得改
 │   ├── planned/ implemented/ archived/
-├── prompts/00-triage.md … 08-pr.md     ← 方法论唯一真相源，任何 agent 可粘贴
-├── .claude/
-│   ├── commands/{triage,survey,grill,spec,lock,tasks,feature,refactor,pr}.md   ← 薄包装，@引用 prompts/
-│   ├── skills/spec-ledger/SKILL.md     ← 让 Claude Code 自动判断该走哪一步
-│   └── skills/tdd-seams/SKILL.md       ← 写测试时自动适用的接缝纪律（model-invoked）
+├── prompts/00-triage.md … 08-pr.md     ← 方法论副本，Codex/Cursor 粘贴用（--no-prompts 可省）
 ├── scripts/
 │   ├── gate.sh                    ← 质量门禁（自动识别 Python / Node）
 │   ├── setup.sh                   ← 一次性启用 pre-commit hook
@@ -83,6 +86,8 @@ your-project/
 ```
 
 安装器默认**不覆盖已存在的文件**，可以安全接入已有项目。
+
+仓库本身是一个 Claude Code 插件：`commands/`（9 个阶段命令，装后为 `/spec-ledger:xxx`）、`skills/`（spec-ledger 路由、tdd-seams 纪律）、`prompts/`（唯一真相源）、`.claude-plugin/`（清单）。
 
 ---
 

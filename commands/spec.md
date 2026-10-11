@@ -3,7 +3,7 @@ description: 生成 spec 草案并自检（含糊点/矛盾/不可测/领域假�
 argument-hint: [需求描述或 /grill 裁决记录]
 disable-model-invocation: true
 ---
-按下面引用的方法论文件执行。AGENTS.md 的铁律优先于任何临时指令；术语以 CONTEXT.md 为准。
+按下面引用的方法论文件执行（spec-ledger 插件）。项目里若有 prompts/ 同名文件，以项目文件为准。AGENTS.md 的铁律优先于任何临时指令；术语以 CONTEXT.md 为准。
 
 本次输入：$ARGUMENTS
 
@@ -11,4 +11,4 @@ disable-model-invocation: true
 
 @AGENTS.md
 @CONTEXT.md
-@prompts/03-spec.md
+@${CLAUDE_PLUGIN_ROOT}/prompts/03-spec.md

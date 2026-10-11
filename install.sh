@@ -2,15 +2,18 @@
 # spec-ledger 安装器：把方法论骨架复制进目标项目。
 #
 # 用法：
-#   bash install.sh <目标项目目录> [--force]
+#   bash install.sh <目标项目目录> [--force] [--no-prompts]
+#     --no-prompts  不复制 prompts/（只用 Claude Code 插件、不用 Codex/Cursor 时可省）
 #   curl -fsSL https://raw.githubusercontent.com/scarlett0928716-design/spec-ledger/main/install.sh | bash -s -- <目标目录>
 #
 # 默认不覆盖已存在的文件（安全接入已有项目）；--force 覆盖全部。
 set -euo pipefail
 
 TARGET="${1:-}"
-FORCE=0
-[ "${2:-}" = "--force" ] && FORCE=1
+FORCE=0; PROMPTS=1
+for a in "${@:2}"; do
+  case "$a" in --force) FORCE=1;; --no-prompts) PROMPTS=0;; esac
+done
 
 if [ -z "$TARGET" ]; then
   echo "用法: bash install.sh <目标项目目录> [--force]" >&2
@@ -20,13 +23,14 @@ fi
 # 定位 template/：本地克隆用脚本旁边的；curl 管道安装则临时拉取
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || echo "")"
 if [ -n "$HERE" ] && [ -d "$HERE/template" ]; then
-  SRC="$HERE/template"
+  KIT="$HERE"
 else
   TMP="$(mktemp -d)"
   REPO="${SPEC_LEDGER_REPO:-https://github.com/scarlett0928716-design/spec-ledger.git}"
   git clone --depth 1 --quiet "$REPO" "$TMP/spec-ledger"
-  SRC="$TMP/spec-ledger/template"
+  KIT="$TMP/spec-ledger"
 fi
+SRC="$KIT/template"
 
 mkdir -p "$TARGET"
 TARGET="$(cd "$TARGET" && pwd)"
@@ -42,6 +46,15 @@ while IFS= read -r -d '' f; do
   cp "$f" "$dest"
   copied=$((copied+1)); copied_list+=("$dest")
 done < <(find "$SRC" -type f -print0)
+
+# prompts/：agent 中立的方法论副本（Codex / Cursor 粘贴用）；Claude Code 走插件，不需要
+if [ "$PROMPTS" -eq 1 ]; then
+  while IFS= read -r -d '' f; do
+    rel="prompts/${f#"$KIT/prompts/"}"; dest="$TARGET/$rel"
+    if [ -e "$dest" ] && [ "$FORCE" -eq 0 ]; then echo "  跳过（已存在）: $rel"; skipped=$((skipped+1)); continue; fi
+    mkdir -p "$(dirname "$dest")"; cp "$f" "$dest"; copied=$((copied+1)); copied_list+=("$dest")
+  done < <(find "$KIT/prompts" -type f -print0)
+fi
 
 chmod +x "$TARGET/scripts/gate.sh" "$TARGET/scripts/setup.sh" "$TARGET/scripts/git-hooks/"* 2>/dev/null || true
 
@@ -62,8 +75,11 @@ spec-ledger 已安装到: $TARGET
 下一步（按顺序）：
   1. 编辑 AGENTS.md 第零节"项目参数"（代码目录、裁决人），往 CONTEXT.md 填前 5 个最容易混淆的术语
   2. cd "$TARGET" && bash scripts/setup.sh      # 启用 pre-commit 门禁并试跑
+  2b. Claude Code 用户装一次插件（所有仓库通用）：
+      /plugin marketplace add scarlett0928716-design/spec-ledger
+      /plugin install spec-ledger@spec-ledger
   3. 已有项目：挑一个最不敢动的老入口，先 /survey → /lock
-     新项目：  第一个功能先 /grill → /spec → 人审 → /tasks → /feature
+     新项目：  第一个功能先 /grill → /spec → 人审 → /tasks → /feature（插件里是 /spec-ledger:grill 等）
   4. 把 docs/methodology.md 里的"人的角色清单"贴在你看得见的地方
 
 EOF

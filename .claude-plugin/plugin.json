@@ -1,0 +1,10 @@
+{
+  "name": "spec-ledger",
+  "version": "0.3.0",
+  "description": "面向遗留系统的 Spec 驱动开发纪律：人画边界、AI 填实现、行为先锁后动、状态只有人能动。9 个阶段命令 + 接缝纪律 skill。",
+  "author": { "name": "Scarlett", "url": "https://github.com/scarlett0928716-design" },
+  "homepage": "https://github.com/scarlett0928716-design/spec-ledger",
+  "repository": "https://github.com/scarlett0928716-design/spec-ledger",
+  "license": "MIT",
+  "keywords": ["spec-driven-development", "legacy", "characterization-tests", "agents-md", "chinese"]
+}

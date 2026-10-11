@@ -2,25 +2,33 @@
 
 方法论的唯一真相源是 `prompts/00…07.md` 和 `AGENTS.md`。各 agent 只是不同的"入口"。
 
-## Claude Code
+## Claude Code（插件，v0.3 起）
 
-安装后即可用，无需配置：
+装一次，所有仓库通用：
+
+```
+/plugin marketplace add scarlett0928716-design/spec-ledger
+/plugin install spec-ledger@spec-ledger
+```
+
+更新：`/plugin update spec-ledger`。项目里只需要 `install.sh` 装的 `AGENTS.md` / `CONTEXT.md` / `spec/` / `scripts/`（可加 `--no-prompts`）。
 
 | 命令 | 作用 |
 |---|---|
-| `/triage <issue>` | 分流 |
-| `/survey <路径>` | 只读梳理 → `docs/survey/`（agent 也可自行调用） |
-| `/grill <需求>` | AI 追问、人裁决，输出裁决记录 |
-| `/spec <需求或裁决记录>` | 生成 spec + 自检 |
-| `/lock <梳理结果或 spec>` | 列接缝 → 特征测试（agent 也可自行调用） |
-| `/tasks <spec 路径>` | 任务账本 |
-| `/feature <spec 路径>` | 列接缝 → TDD 实现 |
-| `/refactor <目标 + 任务号>` | 小步重构 |
-| `/pr <issue 号>` | 提交与 PR |
+| `/spec-ledger:triage <issue>` | 分流 |
+| `/spec-ledger:survey <路径>` | 只读梳理 → `docs/survey/`（agent 也可自行调用） |
+| `/spec-ledger:grill <需求>` | AI 追问、人裁决，输出裁决记录 |
+| `/spec-ledger:spec <需求或裁决记录>` | 生成 spec + 自检 |
+| `/spec-ledger:lock <梳理结果或 spec>` | 列接缝 → 特征测试（agent 也可自行调用） |
+| `/spec-ledger:tasks <spec 路径>` | 任务账本 |
+| `/spec-ledger:feature <spec 路径>` | 列接缝 → TDD 实现 |
+| `/spec-ledger:refactor <目标 + 任务号>` | 小步重构 |
+| `/spec-ledger:pr <issue 号>` | 提交与 PR |
 
-- 命令文件在 `.claude/commands/`，内容只有几行，通过 `@AGENTS.md` 和 `@prompts/xx.md` 把方法论文件引入上下文。改 `prompts/`，命令自动生效。
-- `.claude/skills/spec-ledger/SKILL.md` 让 Claude Code 在收到"改代码"类请求时自动判断该走哪一步，并在该停的地方停下来问人。
-- `.claude/skills/tdd-seams/SKILL.md` 是 model-invoked 纪律：agent 写测试时自动适用，不需要你敲。
+- 命令在插件的 `commands/`，通过 `@AGENTS.md`、`@CONTEXT.md`（项目里的）和 `@${CLAUDE_PLUGIN_ROOT}/prompts/xx.md`（插件里的）引入上下文。
+- `skills/spec-ledger/SKILL.md` 让 Claude Code 在收到"改代码"类请求时自动判断该走哪一步，并在该停的地方停下来问人。
+- `skills/tdd-seams/SKILL.md` 是 model-invoked 纪律：agent 写测试时自动适用，不需要你敲。
+- 不想装插件也行：把仓库的 `commands/` 和 `skills/` 复制到项目 `.claude/` 下，并把命令里的 `${CLAUDE_PLUGIN_ROOT}/prompts/` 改成 `prompts/`（v0.2 的用法）。
 - 编排类命令（triage / grill / spec / tasks / feature / refactor / pr）带 `disable-model-invocation: true`，只由人发起；`survey` 和 `lock` 允许 agent 自行调用。
 - 建议搭配 Claude Code 的 plan mode 做 `/spec` 之前的探索；`/tasks` 产出的账本比会话内 TaskList 可靠——它落盘。
 - 可选硬化：在 `.claude/settings.json` 加一个 `PreToolUse` hook 拦截 `git commit` 时跑 `scripts/gate.sh`。通常不需要，因为 pre-commit hook 已经覆盖了所有 agent。

@@ -1,0 +1,14 @@
+{
+  "name": "spec-ledger",
+  "owner": { "name": "Scarlett", "url": "https://github.com/scarlett0928716-design" },
+  "metadata": { "description": "spec-ledger 插件市场（单插件）", "version": "0.3.0" },
+  "plugins": [
+    {
+      "name": "spec-ledger",
+      "source": "./",
+      "description": "Spec 驱动开发纪律：/spec-ledger:triage grill spec lock tasks feature refactor pr + tdd-seams skill",
+      "version": "0.3.0",
+      "category": "development"
+    }
+  ]
+}

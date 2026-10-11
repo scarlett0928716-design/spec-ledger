@@ -81,7 +81,7 @@
 - 修改 spec 状态或移动 spec 文件
 - 修改 `spec/governance/` 和本文件
 - 修改 `CONTEXT.md` 的正式术语表（你只能往"待确认"区追加）
-- 自行拍板业务语义——不确定就用 `/grill` 问，或记入 CONTEXT.md 待确认区
+- 自行拍板业务语义——不确定就用 `/spec-ledger:grill` 问，或记入 CONTEXT.md 待确认区
 - 合并 PR
 
 ---
@@ -173,17 +173,19 @@ bash scripts/gate.sh
 
 ## 八、Prompt 入口
 
-| 阶段 | agent 中立版（任何 agent 粘贴） | Claude Code 一键命令 |
+| 阶段 | agent 中立版（任何 agent 粘贴） | Claude Code 插件命令 |
 |---|---|---|
-| issue 分流 | `prompts/00-triage.md` | `/triage` |
-| 架构梳理（只读） | `prompts/01-survey.md` | `/survey` |
-| 追问（写 spec 前把人问清楚） | `prompts/02-grill.md` | `/grill` |
-| 生成 spec（含自检） | `prompts/03-spec.md` | `/spec` |
-| 特征测试（锁现状） | `prompts/04-lock.md` | `/lock` |
-| 任务拆解（落盘） | `prompts/05-tasks.md` | `/tasks` |
-| 新功能开发（TDD） | `prompts/06-feature.md` | `/feature` |
-| 安全重构（小步） | `prompts/07-refactor.md` | `/refactor` |
-| 提交与 PR | `prompts/08-pr.md` | `/pr` |
+| issue 分流 | `prompts/00-triage.md` | `/spec-ledger:triage` |
+| 架构梳理（只读） | `prompts/01-survey.md` | `/spec-ledger:survey` |
+| 追问（写 spec 前把人问清楚） | `prompts/02-grill.md` | `/spec-ledger:grill` |
+| 生成 spec（含自检） | `prompts/03-spec.md` | `/spec-ledger:spec` |
+| 特征测试（锁现状） | `prompts/04-lock.md` | `/spec-ledger:lock` |
+| 任务拆解（落盘） | `prompts/05-tasks.md` | `/spec-ledger:tasks` |
+| 新功能开发（TDD） | `prompts/06-feature.md` | `/spec-ledger:feature` |
+| 安全重构（小步） | `prompts/07-refactor.md` | `/spec-ledger:refactor` |
+| 提交与 PR | `prompts/08-pr.md` | `/spec-ledger:pr` |
+
+插件安装（一次，所有仓库通用）：`/plugin marketplace add scarlett0928716-design/spec-ledger` → `/plugin install spec-ledger@spec-ledger`。
 
 ---
 

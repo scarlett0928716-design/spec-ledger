@@ -18,7 +18,7 @@
 
 ## 各 agent 的用法
 
-- **Claude Code**：`.claude/commands/` 里有同名斜杠命令（`/triage` `/survey` `/grill` `/spec` `/lock` `/tasks` `/feature` `/refactor` `/pr`），命令只是薄包装，内容通过 `@prompts/xx.md` 引用这里的文件——改这里，命令自动生效。`.claude/skills/tdd-seams/` 是 agent 写测试时自动适用的纪律。
+- **Claude Code**：装 spec-ledger 插件后有同名命令（`/spec-ledger:triage` … `/spec-ledger:pr`），命令是薄包装，内容引用插件自带的这组文件；项目里若也有 `prompts/`，以项目文件为准。`tdd-seams` skill 随插件自动适用。
 - **Codex / Cursor / 其他**：会自动读 `AGENTS.md`；具体阶段把对应文件的 Prompt 模板粘进对话。
 - **人**：每个文件末尾的"人审要点"是你的检查清单。
 

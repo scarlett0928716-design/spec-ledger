@@ -2,7 +2,7 @@
 description: 特征测试：先列接缝等确认，再把当前行为（含可疑行为）锁进 tests/characterization/（重构前 agent 可自行调用）
 argument-hint: [docs/survey/xx.md 或 spec 路径]
 ---
-按下面引用的方法论文件执行。AGENTS.md 的铁律优先于任何临时指令；术语以 CONTEXT.md 为准。
+按下面引用的方法论文件执行（spec-ledger 插件）。项目里若有 prompts/ 同名文件，以项目文件为准。AGENTS.md 的铁律优先于任何临时指令；术语以 CONTEXT.md 为准。
 
 本次输入：$ARGUMENTS
 
@@ -10,4 +10,4 @@ argument-hint: [docs/survey/xx.md 或 spec 路径]
 
 @AGENTS.md
 @CONTEXT.md
-@prompts/04-lock.md
+@${CLAUDE_PLUGIN_ROOT}/prompts/04-lock.md

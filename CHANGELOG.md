@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0 — 2026-10-11
+
+仓库变成 **Claude Code 插件**，一次安装、所有仓库通用：
+
+- 新增 `.claude-plugin/plugin.json` 与 `marketplace.json`；`/plugin marketplace add scarlett0928716-design/spec-ledger` → `/plugin install spec-ledger@spec-ledger`
+- `commands/`、`skills/`、`prompts/` 从 `template/` 上提到仓库根；命令改为 `/spec-ledger:<阶段>`，prompt 引用改为 `@${CLAUDE_PLUGIN_ROOT}/prompts/…`
+- `install.sh` 不再往项目里装 `.claude/`；`prompts/` 仍默认复制（Codex/Cursor 用），`--no-prompts` 可省
+- 账号级 skill：同一套纪律压缩成一份自包含 SKILL.md，可保存为 Claude 账号 skill，在任何对话里生效
+
 ## v0.2.1 — 2026-10-08
 
 - 修复 `install.sh`：日期占位替换只作用于本次新复制的文件，不再改动目标项目里已有的 `AGENTS.md` / governance
